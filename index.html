@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgb(201, 144, 255);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        button {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <table>
+        <tr>
+            <td> <button onclick="ham(0)"></button></td>
+            <td> <button onclick="ham(1)"></button></td>
+            <td> <button onclick="ham(2)"></button></td>
+        </tr>
+        <tr>
+            <td> <button onclick="ham(3)"></button></td>
+            <td> <button onclick="ham(4)"></button></td>
+            <td> <button onclick="ham(5)"></button></td>
+        </tr>
+        <tr>
+            <td> <button onclick="ham(6)"></button></td>
+            <td> <button onclick="ham(7)"></button></td>
+            <td> <button onclick="ham(8)"></button></td>
+        </tr>
+    </table>
+    
+  <script>
+    let dem = 0;
+    let co = true;
+    function ham(btn) 
+    {
+        const node = document.querySelectorAll('button')[btn];
+        node.innerHTML =co?'<strong>X':'<strong>O';
+        node.style.backgroundColor = co?'aqua':'yellow';
+        node.setAttribute('disabled','true');
+        dem+=1;
+        co = !co;
+        // Kiểm tra các trường hợp thắng
+        const buttons = document.querySelectorAll('button');
+        const board = Array.from(buttons).map(btn => btn.innerText.trim());
+        const winPatterns = [
+            [0,1,2],[3,4,5],[6,7,8], // hàng ngang
+            [0,3,6],[1,4,7],[2,5,8], // hàng dọc
+            [0,4,8],[2,4,6]          // chéo
+        ];
+        for (const pattern of winPatterns) {
+            const [a, b, c] = pattern;
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+            setTimeout(() => {
+                alert(`Người chơi ${board[a]} thắng!`);
+                location.reload();
+            }, 100);
+            return;
+            }
+        }
+        // Nếu hết lượt mà không ai thắng
+        if (dem === 9) {
+            setTimeout(() => {
+            alert('Hòa!');
+            location.reload();
+            }, 100);
+        }
+        
+    }
+  </script>
+</body>
+</html>
